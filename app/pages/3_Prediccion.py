@@ -64,7 +64,7 @@ input_df = pd.DataFrame([user_inputs])
 # -----------------------------------------------------
 if st.button("🔮 Predecir motor_UPDRS"):
     # Escalar datos igual que en el entrenamiento
-    input_scaled = scaler.transform(input_df)
+    input_scaled = scaler.transform(input_df.values)
 
     # Hacer predicción
     pred = model.predict(input_scaled)[0]
