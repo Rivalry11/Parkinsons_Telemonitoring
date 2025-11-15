@@ -79,12 +79,6 @@ for name, model in models.items():
         'y_pred': y_pred
     }
 
-# Convertir a DataFrame
-df_results = pd.DataFrame(results).T
-df_results.sort_values(by="R2", ascending=False)
-st.subheader("📊 Métricas de rendimiento de cada modelo")
-st.dataframe(df_results[['MSE', 'R2']])
-
 # -----------------------------
 # MÉTRICAS ORDENADAS Y GRÁFICOS
 # -----------------------------
