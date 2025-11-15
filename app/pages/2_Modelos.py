@@ -11,6 +11,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error, r2_score
+from PIL import Image
 
 
 # -----------------------------
@@ -157,59 +158,70 @@ fig, ax = plt.subplots(figsize=(6, 6))
 sns.barplot(data=feat_importances, x='Importancia', y='Variable', palette='crest')
 plt.title("Importancia de Variables")
 st.pyplot(fig)
+
+
+st.subheader("🔁 Permutation Importance (imagen precalculada – versión móvil)")
+
+# Mostrar imagen de forma responsiva
+try:
+    image = Image.open("app/images/permutation_importance.png")
+
+    # Layout responsivo para móviles
+    col1, col2, col3 = st.columns([1, 3, 1])
+    with col2:
+        st.image(image, caption="Permutation Importance – Random Forest", use_column_width=True)
+
+except:
+    st.warning("⚠️ No se pudo cargar la imagen. Asegúrate de generar la imagen en el notebook.")
+
 # -----------------------------
-# PERMUTATION IMPORTANCE — SOLO SI EL USUARIO LO SOLICITA
+# TEXTO AUTOMÁTICO: Interpretación de las 3 variables más importantes
 # -----------------------------
-st.subheader("🔁 Permutation Importance (cálculo más lento)")
+st.subheader("📘 Interpretación automática de las 3 variables más importantes")
 
-if st.button("Calcular Permutation Importance"):
-    with st.spinner("Calculando... puede tardar unos segundos"):
-        from sklearn.inspection import permutation_importance
-        result = permutation_importance(
-            rf, X_test, y_test,
-            n_repeats=10,
-            random_state=42,
-            n_jobs=-1
-        )
+# Diccionario de descripciones clínicas
+descripcion_variables = {
+    "test_time": "Momento dentro del seguimiento. Indica progresión temporal de la enfermedad.",
+    "Jitter(%)": "Variación rápida de frecuencia. Se relaciona con inestabilidad vocal por alteraciones motoras.",
+    "Jitter(Abs)": "Cambios absolutos en frecuencia. Refleja vibración irregular de las cuerdas vocales.",
+    "Jitter:RAP": "Promedio de variaciones sucesivas — asociado al temblor fino vocal.",
+    "Jitter:PPQ5": "Variación de frecuencia a corto plazo, relacionada con pérdida de control muscular.",
+    "Jitter:DDP": "Derivado de RAP — mide inestabilidad de vibración.",
+    "Shimmer": "Variación de amplitud — evidencia rigidez y fatiga muscular.",
+    "Shimmer(dB)": "Oscilación de amplitud en decibelios — fuerte indicador de deterioro vocal.",
+    "Shimmer:APQ3": "Promedio de diferencias de amplitud — estabilidad fonatoria.",
+    "Shimmer:APQ5": "Variabilidad de amplitud a corto plazo.",
+    "Shimmer:APQ11": "Variación a largo plazo — voz más irregular.",
+    "Shimmer:DDA": "Derivado de APQ3 — irregularidad muscular.",
+    "NHR": "Relación ruido-armonía. A mayor ruido, peor calidad vocal.",
+    "HNR": "Relación armónico-ruido. Valores bajos muestran voz deteriorada.",
+    "RPDE": "Medida de complejidad temporal de la señal vocal.",
+    "DFA": "Captura la dinámica no lineal del habla.",
+    "PPE": "Indicador de irregularidad del tono."
+}
 
-        feat_perm = pd.DataFrame({
-            "Variable": X.columns,
-            "Importancia": result.importances_mean,
-            "STD": result.importances_std
-        }).sort_values(by="Importancia", ascending=False)
+# Cargar el dataframe usado para generar las importancias
+# (Debe coincidir con el orden de la imagen)
+try:
+    import pandas as pd
+    feat_perm = pd.read_csv("app/images/feat_perm_values.csv")  # OPCIONAL si guardaste los datos
 
-        # Gráfico
-        fig2, ax2 = plt.subplots(figsize=(8, 6))
-        sns.barplot(data=feat_perm, x="Importancia", y="Variable", palette="viridis")
-        plt.title("Permutation Importance – Random Forest")
-        st.pyplot(fig2)
+    top3 = feat_perm.head(3)
 
-        # Tabla explicativa
-        st.subheader("📘 Interpretación de las variables más importantes")
-        explicacion = {
-            "test_time": "Indica progresión temporal del paciente.",
-            "Jitter(%)": "Variación de frecuencia — refleja inestabilidad vocal.",
-            "Jitter(Abs)": "Cambio absoluto en frecuencia — vibración irregular.",
-            "Jitter:RAP": "Variación rápida — temblor fino.",
-            "Jitter:PPQ5": "Variación a corto plazo.",
-            "Jitter:DDP": "Medida derivada de RAP.",
-            "Shimmer": "Variación en amplitud — rigidez muscular.",
-            "Shimmer(dB)": "Oscilación dB — severidad vocal.",
-            "Shimmer:APQ3": "Amplitud promediada — estabilidad de fonación.",
-            "Shimmer:APQ5": "Variabilidad de amplitud.",
-            "Shimmer:APQ11": "Variabilidad de amplitud a largo plazo.",
-            "Shimmer:DDA": "Variación derivada de APQ3.",
-            "NHR": "Ruido presente en la señal vocal.",
-            "HNR": "Relación armónico-ruido.",
-            "RPDE": "Complejidad temporal de la señal.",
-            "DFA": "Dinamismo no lineal de la voz.",
-            "PPE": "Estimación de probabilidad de error en tono."
-        }
+    st.markdown("### 🥇 Variables más influyentes en el modelo")
 
-        info_df = pd.DataFrame({
-            "Variable": feat_perm["Variable"],
-            "Importancia": feat_perm["Importancia"].round(4),
-            "Interpretación": feat_perm["Variable"].map(explicacion)
-        })
+    for i, row in top3.iterrows():
+        var = row["Variable"]
+        imp = row["Importancia"]
 
-        st.dataframe(info_df)
+        st.markdown(f"""
+        **🔹 {var}**  
+        Importancia: `{imp:.4f}`  
+        **Interpretación:** {descripcion_variables.get(var, "No hay interpretación disponible.")}  
+        """)
+
+except:
+    st.info("""
+    ℹ️ Para generar el texto automático, puedes guardar el dataframe de Permutation Importance
+    como `feat_perm_values.csv` desde el notebook.
+    """)
