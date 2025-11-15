@@ -57,19 +57,10 @@ st.write("""
 - El dataset no incluye información clínica completa (medicación, antecedentes, etc.).
 - Solo se utilizaron variables acústicas, lo cual limita el alcance predictivo.
 - El tamaño del dataset es moderado y puede no generalizar a toda la población.
-- No se realizó un tuning profundo de hiperparámetros por tiempo académico.
 """)
 
-# 6. Recomendaciones
-st.header("🧪 Recomendaciones para Trabajo Futuro")
-st.write("""
-- Implementar técnicas avanzadas como **XGBoost**, **Redes Neuronales** o **LSTM** para señales de voz.
-- Considerar cross-validation para evaluar la estabilidad del modelo.
-- Ampliar el dataset con nuevas grabaciones o metadatos clínicos.
-- Crear una API o dashboard de predicción integrado para análisis clínico asistido.
-""")
 
-# 7. Conclusión final
+# 6. Conclusión final
 st.header("📘 Conclusión Final")
 st.write("""
 El objetivo del proyecto se cumplió: se logró analizar detalladamente el dataset,
