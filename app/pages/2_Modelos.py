@@ -28,7 +28,7 @@ a partir de las variables acústicas y clínicas del dataset.
 # -----------------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/parkinsons_updrs.csv")
+    df = pd.read_csv("../../../data/parkinsons_updrs.csv")
     df = df.rename(columns={'subject#': 'subject_id'})
     df = df.drop(['sex', 'subject_id', 'age'], axis=1, errors='ignore')
     return df
