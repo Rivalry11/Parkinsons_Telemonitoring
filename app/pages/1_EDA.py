@@ -19,6 +19,7 @@ Aquí puedes explorar las distribuciones, correlaciones y relaciones entre las v
 @st.cache_data
 def load_data():
     df = pd.read_csv("data/parkinsons_updrs.csv")
+    df['test_time'] = df['test_time'].astype(int)
     df = df.rename(columns={'subject#': 'subject_id'})
     return df
 
@@ -64,10 +65,12 @@ st.pyplot(fig)
 # -----------------------------
 st.subheader("🔥 Mapa de correlación")
 
-corr = df.corr()
+plt.figure(figsize=(14, 10))
 
-plt.figure(figsize=(10,6))
-sns.heatmap(corr, annot=False, cmap="coolwarm")
+corr_matrix = df.drop(['subject_id', 'sex', 'age'], axis=1).corr()
+sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm", center=0)
+plt.title("Mapa de correlación (sin valores negativos en test_time)")
+plt.show()
 st.pyplot()
 
 # -----------------------------
