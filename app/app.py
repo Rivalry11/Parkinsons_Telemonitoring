@@ -19,8 +19,7 @@ Bienvenido al dashboard interactivo del proyecto **Parkinson’s Telemonitoring*
 
 Este sistema presenta:
 - 📊 **Análisis Exploratorio (EDA)**  
-- 🤖 **Comparación de Modelos de Machine Learning**  
-- 🔮 **Predicción en tiempo real de motor_UPDRS**  
+- 🤖 **Comparación de Modelos de Machine Learning**    
 
 Este proyecto fue desarrollado para la entrega académica de Machine Learning.
 """)
