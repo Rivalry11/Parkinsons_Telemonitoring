@@ -34,7 +34,6 @@ Usa el menú **Pages** de Streamlit (a la izquierda) para cambiar entre:
 
 - **📊 EDA**
 - **🤖 Modelos**
-- **🔮 Predicción**
 """)
 
 st.sidebar.markdown("---")
