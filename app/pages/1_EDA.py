@@ -37,7 +37,7 @@ st.dataframe(df.describe())
 # -----------------------------
 # DISTRIBUCIONES CON HISTOGRAMA + KDE
 # -----------------------------
-st.subheader("📈 Distribución de variables numéricas")
+st.subheader("📈 Distribución de variables")
 
 num_cols = df.select_dtypes(include=['float64', 'int64']).columns
 
@@ -47,6 +47,10 @@ plt.figure(figsize=(6,4))
 sns.histplot(df[selected_var], kde=True, color="steelblue")
 plt.title(f"Distribución de {selected_var}")
 st.pyplot()
+
+st.markdown("""
+Las variables clínicas (**motor_UPDRS** y **total_UPDRS**) muestran una distribución amplia, indicando distintos niveles de severidad entre pacientes. En contraste, la mayoría de las variables acústicas (**Jitter, Shimmer, NHR**) están fuertemente sesgadas hacia valores bajos, lo cual es típico en medidas de voz. Las variables no lineales (**RPDE, DFA, PPE**) presentan distribuciones más equilibradas. En conjunto, esto muestra que el dataset es diverso y requiere normalización para un buen modelado.
+""")
 
 # -----------------------------
 # BOXLOTS DE VARIABLES PRINCIPALES
@@ -59,6 +63,13 @@ fig, ax = plt.subplots(figsize=(6, 4))
 sns.boxplot(data=df[cols_box])
 plt.title("Boxplots de motor_UPDRS y total_UPDRS")
 st.pyplot(fig)
+st.subheader("📝 Conclusiones")
+
+st.markdown("""
+- **total_UPDRS** presenta valores más altos y una mayor variabilidad, lo cual es esperado porque esta medida incluye tanto síntomas motores como no motores.
+- **motor_UPDRS** muestra una dispersión ligeramente menor y valores más concentrados alrededor de la mediana.
+""")
+
 
 # -----------------------------
 # HEATMAP DE CORRELACIONES
@@ -73,24 +84,8 @@ plt.title("Mapa de correlación (sin valores negativos en test_time)")
 plt.show()
 st.pyplot()
 
-# -----------------------------
-# SCATTERPLOT ENTRE TARGETS
-# -----------------------------
-st.subheader("🔍 Relación entre motor_UPDRS y total_UPDRS")
-
-plt.figure(figsize=(6,4))
-sns.scatterplot(x=df["motor_UPDRS"], y=df["total_UPDRS"], hue=df["sex"], palette="Set2")
-plt.title("motor_UPDRS vs total_UPDRS por sexo")
-st.pyplot()
-
-# -----------------------------
-# CONCLUSIONES
-# -----------------------------
 st.subheader("📝 Conclusiones")
 
 st.markdown("""
-- **motor_UPDRS** y **total_UPDRS** están fuertemente correlacionados.
-- Varias variables acústicas muestran relaciones con los síntomas motores.
-- Se observan distribuciones relativamente consistentes entre pacientes.
-- No existen valores nulos significativos después del preprocesamiento.
+- Este mapa muestra la relación entre todas las variables. Se observan fuertes correlaciones entre las medidas de **Jitter** y **Shimmer**, así como una alta relación entre **motor_UPDRS** y **total_UPDRS**. **HNR** destaca por correlaciones negativas con varias variables acústicas.
 """)
