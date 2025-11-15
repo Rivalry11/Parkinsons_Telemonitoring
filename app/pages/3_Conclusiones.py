@@ -33,6 +33,8 @@ Se compararon múltiples modelos: **Regresión Lineal**, **Ridge**, **Lasso**, *
 
 Los modelos basados en **Random Forest** y **Gradient Boosting** fueron los que mostraron
 mejor rendimiento según el valor de R² y el MSE.
+
+El modelo elegido fue **Random Forest** según el valor de R².
 """)
 
 # 4. Interpretación del mejor modelo
@@ -55,7 +57,7 @@ típicas de pacientes con síntomas motores más avanzados.
 st.header("⚠️ Limitaciones del Estudio")
 st.write("""
 - El dataset no incluye información clínica completa (medicación, antecedentes, etc.).
-- Solo se utilizaron variables acústicas, lo cual limita el alcance predictivo.
+- Solo se utilizaron variables acústicas, lo cual limita el alcance predictivo de la degradacion de la enfermedad en los pacientes.
 - El tamaño del dataset es moderado y puede no generalizar a toda la población.
 """)
 
