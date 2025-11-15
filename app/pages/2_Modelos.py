@@ -157,3 +157,59 @@ fig, ax = plt.subplots(figsize=(6, 6))
 sns.barplot(data=feat_importances, x='Importancia', y='Variable', palette='crest')
 plt.title("Importancia de Variables")
 st.pyplot(fig)
+# -----------------------------
+# PERMUTATION IMPORTANCE — SOLO SI EL USUARIO LO SOLICITA
+# -----------------------------
+st.subheader("🔁 Permutation Importance (cálculo más lento)")
+
+if st.button("Calcular Permutation Importance"):
+    with st.spinner("Calculando... puede tardar unos segundos"):
+        from sklearn.inspection import permutation_importance
+        result = permutation_importance(
+            rf, X_test, y_test,
+            n_repeats=10,
+            random_state=42,
+            n_jobs=-1
+        )
+
+        feat_perm = pd.DataFrame({
+            "Variable": X.columns,
+            "Importancia": result.importances_mean,
+            "STD": result.importances_std
+        }).sort_values(by="Importancia", ascending=False)
+
+        # Gráfico
+        fig2, ax2 = plt.subplots(figsize=(8, 6))
+        sns.barplot(data=feat_perm, x="Importancia", y="Variable", palette="viridis")
+        plt.title("Permutation Importance – Random Forest")
+        st.pyplot(fig2)
+
+        # Tabla explicativa
+        st.subheader("📘 Interpretación de las variables más importantes")
+        explicacion = {
+            "test_time": "Indica progresión temporal del paciente.",
+            "Jitter(%)": "Variación de frecuencia — refleja inestabilidad vocal.",
+            "Jitter(Abs)": "Cambio absoluto en frecuencia — vibración irregular.",
+            "Jitter:RAP": "Variación rápida — temblor fino.",
+            "Jitter:PPQ5": "Variación a corto plazo.",
+            "Jitter:DDP": "Medida derivada de RAP.",
+            "Shimmer": "Variación en amplitud — rigidez muscular.",
+            "Shimmer(dB)": "Oscilación dB — severidad vocal.",
+            "Shimmer:APQ3": "Amplitud promediada — estabilidad de fonación.",
+            "Shimmer:APQ5": "Variabilidad de amplitud.",
+            "Shimmer:APQ11": "Variabilidad de amplitud a largo plazo.",
+            "Shimmer:DDA": "Variación derivada de APQ3.",
+            "NHR": "Ruido presente en la señal vocal.",
+            "HNR": "Relación armónico-ruido.",
+            "RPDE": "Complejidad temporal de la señal.",
+            "DFA": "Dinamismo no lineal de la voz.",
+            "PPE": "Estimación de probabilidad de error en tono."
+        }
+
+        info_df = pd.DataFrame({
+            "Variable": feat_perm["Variable"],
+            "Importancia": feat_perm["Importancia"].round(4),
+            "Interpretación": feat_perm["Variable"].map(explicacion)
+        })
+
+        st.dataframe(info_df)
