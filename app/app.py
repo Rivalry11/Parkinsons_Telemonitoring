@@ -77,10 +77,6 @@ Comparación visual e interactiva de ocho modelos:
 
 Incluye métricas **MSE** y **R²**, y gráficos de dispersión.
 
-#### 3. **Predicción en tiempo real**
-Ingreso de variables acústicas para predecir el puntaje **motor_UPDRS** usando el modelo final (.pkl).
-
----
 
 ### 📌 Nota  
 Usa el menú lateral *Pages* para navegar entre módulos.
