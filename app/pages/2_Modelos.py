@@ -86,10 +86,29 @@ st.subheader("📊 Métricas de rendimiento de cada modelo")
 st.dataframe(df_results[['MSE', 'R2']])
 
 # -----------------------------
+# MÉTRICAS ORDENADAS Y GRÁFICOS
+# -----------------------------
+
+# Convertir resultados a DataFrame
+df_results = pd.DataFrame(results).T
+
+# Normalizar columna R2 → R²
+df_results = df_results.rename(columns={"R2": "R²"})
+
+# Ordenar de mejor a peor rendimiento
+df_results_sorted = df_results.sort_values(by="R²", ascending=False)
+
+# Mostrar tabla ordenada
+st.subheader("📊 Métricas de rendimiento de cada modelo (ordenadas por R²)")
+st.dataframe(df_results_sorted[['MSE', 'R²']])
+
+# -----------------------------
 # GRAFICO COMPARATIVO DE MÉTRICAS
 # -----------------------------
 st.subheader("📈 Comparación gráfica de rendimiento (MSE y R²)")
-df_r2 = df_results.sort_values(by="R²", ascending=False).reset_index().rename(columns={"index": "Modelo"})
+
+# Preparar rankings
+df_r2 = df_results_sorted.reset_index().rename(columns={"index": "Modelo"})
 df_mse = df_results.sort_values(by="MSE", ascending=True).reset_index().rename(columns={"index": "Modelo"})
 
 # Crear la figura
@@ -124,29 +143,7 @@ axes[1].tick_params(axis='x', rotation=45)
 plt.suptitle("Comparación ordenada de rendimiento entre modelos", fontsize=15, y=1.05)
 plt.tight_layout()
 plt.show()
-
-# -----------------------------
-# DISPERSIÓN INDIVIDUAL POR MODELO
-# -----------------------------
-st.subheader("🔍 Dispersión de predicciones por modelo")
-
-selected_model = st.selectbox("Selecciona un modelo", list(models.keys()))
-
-model = models[selected_model]
-y_pred = results[selected_model]['y_pred']
-
-min_val = min(y_test.min(), y_pred.min())
-max_val = max(y_test.max(), y_pred.max())
-
-plt.figure(figsize=(7, 5))
-sns.scatterplot(x=y_test, y=y_pred, color='teal', edgecolor='white')
-plt.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2)
-sns.regplot(x=y_test, y=y_pred, scatter=False, color='orange')
-plt.title(f"{selected_model}\nR²={results[selected_model]['R2']:.2f} | MSE={results[selected_model]['MSE']:.2f}")
-plt.xlabel("Valor real (y_test)")
-plt.ylabel("Predicción (y_pred)")
-
-st.pyplot()
+st.pyplot(fig)
 
 # -----------------------------
 # IMPORTANCIA DE VARIABLES (RANDOM FOREST)
