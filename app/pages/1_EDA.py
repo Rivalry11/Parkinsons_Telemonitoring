@@ -2,6 +2,35 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os   # 👈 necesario para inspeccionar rutas
+
+# ============================
+# 🔍 DEBUG: MOSTRAR RUTAS REALES EN STREAMLIT CLOUD
+# ============================
+st.write("📂 CURRENT WORKING DIR:", os.getcwd())
+st.write("📂 FILES HERE:", os.listdir("."))
+st.write("📂 FILES IN ..:", os.listdir(".."))
+st.write("📂 FILES IN ../..:", os.listdir("../.."))
+st.write("📂 FILES IN ../../data:", os.listdir("../../data") if os.path.exists("../../data") else "NO DATA HERE")
+st.write("📂 FILES IN ../data:", os.listdir("../data") if os.path.exists("../data") else "NO DATA HERE")
+st.write("📂 FILES IN data:", os.listdir("data") if os.path.exists("data") else "NO DATA HERE")
+
+# ============================
+# 🔍 TEST AUTOMÁTICO DE RUTAS
+# ============================
+csv_found = False
+
+for path in ["data", "../data", "../../data", "../../../data"]:
+    test_path = f"{path}/parkinsons_updrs.csv"
+    if os.path.exists(test_path):
+        st.success(f"CSV FOUND HERE → {test_path}")
+        df = pd.read_csv(test_path)
+        csv_found = True
+        break
+
+if not csv_found:
+    st.error("❌ CSV NOT FOUND IN ANY TESTED PATH")
+    st.stop()
 
 # -----------------------------
 # TÍTULO Y DESCRIPCIÓN
@@ -18,7 +47,7 @@ Aquí puedes explorar las distribuciones, correlaciones y relaciones entre las v
 # -----------------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/parkinsons_updrs.csv")
+    df = pd.read_csv("../../../data/parkinsons_updrs.csv")
     df = df.rename(columns={'subject#': 'subject_id'})
     return df
 
