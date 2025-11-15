@@ -81,6 +81,7 @@ for name, model in models.items():
 
 # Convertir a DataFrame
 df_results = pd.DataFrame(results).T
+df_results.sort_values(by="R2", ascending=False)
 st.subheader("📊 Métricas de rendimiento de cada modelo")
 st.dataframe(df_results[['MSE', 'R2']])
 
@@ -88,18 +89,41 @@ st.dataframe(df_results[['MSE', 'R2']])
 # GRAFICO COMPARATIVO DE MÉTRICAS
 # -----------------------------
 st.subheader("📈 Comparación gráfica de rendimiento (MSE y R²)")
+df_r2 = df_results.sort_values(by="R²", ascending=False).reset_index().rename(columns={"index": "Modelo"})
+df_mse = df_results.sort_values(by="MSE", ascending=True).reset_index().rename(columns={"index": "Modelo"})
 
-fig, axes = plt.subplots(1, 2, figsize=(16, 5))
+# Crear la figura
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
-sns.barplot(x=df_results.index, y=df_results['R2'], palette='crest', ax=axes[0])
-axes[0].set_title("R² por modelo")
+# --- Gráfico R² (de mejor a peor) ---
+sns.barplot(
+    x="Modelo", 
+    y="R²", 
+    data=df_r2,
+    palette="crest",
+    ax=axes[0]
+)
+axes[0].set_title("Ranking de Modelos por R² (mejor → peor)")
+axes[0].set_ylabel("R²")
+axes[0].set_xlabel("Modelo")
 axes[0].tick_params(axis='x', rotation=45)
 
-sns.barplot(x=df_results.index, y=df_results['MSE'], palette='flare', ax=axes[1])
-axes[1].set_title("MSE por modelo")
+# --- Gráfico MSE (de mejor a peor) ---
+sns.barplot(
+    x="Modelo", 
+    y="MSE", 
+    data=df_mse,
+    palette="flare",
+    ax=axes[1]
+)
+axes[1].set_title("Ranking de Modelos por MSE (menor error → mayor error)")
+axes[1].set_ylabel("MSE")
+axes[1].set_xlabel("Modelo")
 axes[1].tick_params(axis='x', rotation=45)
 
-st.pyplot(fig)
+plt.suptitle("Comparación ordenada de rendimiento entre modelos", fontsize=15, y=1.05)
+plt.tight_layout()
+plt.show()
 
 # -----------------------------
 # DISPERSIÓN INDIVIDUAL POR MODELO
