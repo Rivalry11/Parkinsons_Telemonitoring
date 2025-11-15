@@ -21,7 +21,6 @@ Este sistema presenta:
 - 📊 **Análisis Exploratorio (EDA)**  
 - 🤖 **Comparación de Modelos de Machine Learning**    
 
-Este proyecto fue desarrollado para la entrega académica de Machine Learning.
 """)
 
 # ---------------------------------------------
@@ -41,7 +40,6 @@ st.sidebar.info("""
 **Dataset:** Parkinson’s Telemonitoring  
 - Fuente: UCI Repository  
 - Registros: 5,875  
-- Variables: 22 acústicas + motor_UPDRS + total_UPDRS  
 """)
 
 st.sidebar.markdown("---")
