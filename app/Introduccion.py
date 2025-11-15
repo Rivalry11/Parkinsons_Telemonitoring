@@ -19,7 +19,8 @@ Bienvenido al dashboard interactivo del proyecto **Parkinson’s Telemonitoring*
 
 Este sistema presenta:
 - 📊 **Análisis Exploratorio (EDA)**  
-- 🤖 **Comparación de Modelos de Machine Learning**    
+- 🤖 **Comparación de Modelos de Machine Learning**  
+- 📌 **Conclusiones del ejercicio**  
 
 """)
 
@@ -32,6 +33,7 @@ Usa el menú **Pages** de Streamlit (a la izquierda) para cambiar entre:
 
 - **📊 EDA**
 - **🤖 Modelos**
+- **📌 Conclusiones**
 """)
 
 st.sidebar.markdown("---")
