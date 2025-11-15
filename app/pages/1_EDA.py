@@ -18,7 +18,7 @@ Aquí puedes explorar las distribuciones, correlaciones y relaciones entre las v
 # -----------------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("..data/parkinsons_updrs.csv")
+    df = pd.read_csv("../data/parkinsons_updrs.csv")
     df = df.rename(columns={'subject#': 'subject_id'})
     return df
 
