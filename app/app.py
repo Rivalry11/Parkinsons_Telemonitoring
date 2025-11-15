@@ -48,7 +48,7 @@ st.sidebar.info("""
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("👩‍💻 Realizado por")
-st.sidebar.write("**Camila Rubio – 2025**")
+st.sidebar.write("**Camila Rubio y Omar Cerezo – 2025**")
 
 # ---------------------------------------------
 # CONTENIDO INICIAL (PORTADA)
@@ -90,4 +90,4 @@ Usa el menú lateral *Pages* para navegar entre módulos.
 # FOOTER
 # ---------------------------------------------
 st.markdown("---")
-st.caption("© 2025 – Dashboard ML de Parkinson’s Telemonitoring |")
+st.caption("© 2025 – Dashboard ML de Parkinson’s Telemonitoring | Develop by Camila Rubio - Omar Cerezo")
