@@ -29,6 +29,58 @@ st.subheader("Vista general del dataset")
 st.dataframe(df.head())
 
 # -----------------------------
+# DICCIONARIO DE DATOS
+# -----------------------------
+
+st.subheader("📘 Diccionario de Datos – Parkinson’s Telemonitoring")
+
+data_dict = {
+    "Variable": [
+        "age", "sex", "test_time",
+        "motor_UPDRS", "total_UPDRS",
+        "Jitter(%)", "Jitter(Abs)", "Jitter:RAP", "Jitter:PPQ5", "Jitter:DDP",
+        "Shimmer", "Shimmer(dB)", "Shimmer:APQ3", "Shimmer:APQ5", "Shimmer:APQ11", "Shimmer:DDA",
+        "NHR", "HNR",
+        "RPDE", "DFA", "PPE"
+    ],
+    "Descripción": [
+        "Edad del paciente en años",
+        "Sexo (0 = mujer, 1 = hombre)",
+        "Días desde la primera medición",
+        "Puntaje motor de la escala UPDRS",
+        "Puntaje total de la escala UPDRS",
+        "Variación porcentual de la frecuencia vocal",
+        "Variación absoluta de la frecuencia vocal",
+        "Variabilidad en ventana de 3 ciclos",
+        "Variabilidad en ventana de 5 ciclos",
+        "Medida derivada del RAP",
+        "Variación de amplitud vocal",
+        "Variación de amplitud en decibelios",
+        "Variabilidad en ventana de 3 ciclos",
+        "Variabilidad en ventana de 5 ciclos",
+        "Variabilidad en ventana de 11 ciclos",
+        "Medida derivada de APQ3",
+        "Proporción ruido / armónicos",
+        "Relación armónicos / ruido",
+        "Imprevisibilidad en la señal vocal",
+        "Complejidad temporal de la señal",
+        "Entropía perceptual del tono vocal"
+    ],
+    "Tipo": [
+        "Numérica", "Categórica", "Numérica",
+        "Numérica", "Numérica",
+        "Numérica", "Numérica", "Numérica", "Numérica", "Numérica",
+        "Numérica", "Numérica", "Numérica", "Numérica", "Numérica", "Numérica",
+        "Numérica", "Numérica",
+        "Numérica", "Numérica", "Numérica"
+    ]
+}
+
+df_dict = pd.DataFrame(data_dict)
+
+st.dataframe(df_dict, use_container_width=True)
+
+# -----------------------------
 # ESTADÍSTICAS DESCRIPTIVAS
 # -----------------------------
 st.subheader("📌 Estadísticas descriptivas")
