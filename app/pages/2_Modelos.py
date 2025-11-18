@@ -145,7 +145,6 @@ st.subheader("📝 Conclusiones")
 st.markdown("""
 Random Forest fue elegido como modelo final porque obtuvo el mejor R² y el menor MSE, superando al resto de modelos. Esto indica que captura mejor las relaciones no lineales y la complejidad del dataset, mientras que los modelos lineales no lograron adaptarse tan bien.
 """)
-
 # -----------------------------
 # IMPORTANCIA DE VARIABLES (RANDOM FOREST)
 # -----------------------------

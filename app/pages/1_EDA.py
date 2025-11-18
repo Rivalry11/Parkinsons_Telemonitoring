@@ -67,12 +67,12 @@ data_dict = {
         "Entropía perceptual del tono vocal"
     ],
     "Tipo": [
-        "Numérica", "Categórica", "Numérica",
-        "Numérica", "Numérica",
-        "Numérica", "Numérica", "Numérica", "Numérica", "Numérica",
-        "Numérica", "Numérica", "Numérica", "Numérica", "Numérica", "Numérica",
-        "Numérica", "Numérica",
-        "Numérica", "Numérica", "Numérica"
+        "int", "Binario", "int",
+        "float", "float",
+        "float", "float", "float", "float", "float",
+        "float", "float", "float", "float", "float", "float",
+        "float", "float",
+        "float", "float", "float"
     ]
 }
 
