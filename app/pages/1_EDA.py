@@ -103,7 +103,7 @@ st.pyplot()
 st.subheader("📝 Conclusiones")
 
 st.markdown("""
-Las variables clínicas (**motor_UPDRS** y **total_UPDRS**) muestran una distribución amplia, indicando distintos niveles de severidad entre pacientes. En contraste, la mayoría de las variables acústicas (**Jitter, Shimmer, NHR**) están fuertemente sesgadas hacia valores bajos, lo cual es típico en medidas de voz. Las variables no lineales (**RPDE, DFA, PPE**) presentan distribuciones más equilibradas. En conjunto, esto muestra que el dataset es diverso y requiere normalización para un buen modelado.
+Las variables clínicas (**motor_UPDRS** y **total_UPDRS**) muestran una distribución amplia, indicando distintos niveles de severidad entre pacientes. En contraste, la mayoría de las variables acústicas (**Jitter, Shimmer, NHR**) están fuertemente sesgadas hacia valores bajos, lo cual es típico en medidas de voz. Las variables no lineales (**RPDE, DFA, PPE**) presentan distribuciones más equilibradas.
 """)
 
 # -----------------------------
