@@ -10,3 +10,4 @@ Este proyecto utiliza datos de monitoreo telemétrico para predecir la severidad
 
 El objetivo principal es evaluar distintos modelos de regresión y seleccionar el mejor para realizar predicciones reales.
 
+
